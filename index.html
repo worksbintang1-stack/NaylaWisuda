@@ -1,14 +1,337 @@
 <!doctype html>
-<html>
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Redirecting...</title>
-    <script>
-      window.location.href = "wisuda-romantis.html";
-    </script>
+    <title>Selamat Wisuda 🌸</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Cormorant Garamond", serif;
+        background: linear-gradient(
+          135deg,
+          #fdeef1 0%,
+          #f5c6d0 50%,
+          #fdeef1 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+
+      .curtain-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+        display: flex;
+      }
+
+      .curtain {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          #d4778a 0%,
+          #e8a0b0 50%,
+          #c2637a 100%
+        );
+        top: 0;
+      }
+
+      .curtain-left {
+        left: 0;
+        border-right: 3px solid #a85472;
+        transform: translateX(0);
+        animation: curtainOpen 1.2s ease-out 0.5s forwards;
+        box-shadow: inset -20px 0px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      .curtain-right {
+        right: 0;
+        border-left: 3px solid #a85472;
+        transform: translateX(0);
+        animation: curtainOpen2 1.2s ease-out 0.5s forwards;
+        box-shadow: inset 20px 0px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes curtainOpen {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-100%);
+        }
+      }
+
+      @keyframes curtainOpen2 {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(100%);
+        }
+      }
+
+      .curtain::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: repeating-linear-gradient(
+          0deg,
+          rgba(255, 255, 255, 0.1) 0px,
+          rgba(255, 255, 255, 0.1) 10px,
+          transparent 10px,
+          transparent 20px
+        );
+      }
+
+      .gold-line {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 3px;
+        height: 60%;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          #c9a96e,
+          transparent
+        );
+        opacity: 0;
+        animation: lineFlash 1.2s ease-out 0.5s forwards;
+        z-index: 999;
+      }
+
+      @keyframes lineFlash {
+        0%,
+        10% {
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      .content {
+        position: relative;
+        z-index: 10;
+        text-align: center;
+        opacity: 0;
+        animation: fadeIn 0.8s ease-out 1.7s forwards;
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .welcome-title {
+        font-family: "Dancing Script", cursive;
+        font-size: clamp(48px, 12vw, 80px);
+        color: #c2637a;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 4px rgba(194, 99, 122, 0.2);
+      }
+
+      .welcome-subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: clamp(18px, 4vw, 28px);
+        color: #7a4f57;
+        letter-spacing: 2px;
+        margin-bottom: 40px;
+        text-transform: uppercase;
+      }
+
+      .hearts {
+        font-size: 24px;
+        letter-spacing: 10px;
+        animation: floatHearts 1s ease-in-out infinite;
+        animation-delay: 2.5s;
+      }
+
+      @keyframes floatHearts {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .tap-text {
+        font-style: italic;
+        color: #b07080;
+        font-size: 14px;
+        margin-top: 30px;
+        opacity: 0;
+        animation: fadeIn 0.8s ease-out 2.5s forwards;
+      }
+
+      /* Petals Animation */
+      .petal-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 5;
+      }
+
+      .petal {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: radial-gradient(ellipse at 40% 30%, #f5d0d8, #e8a0b0);
+        border-radius: 50% 0%;
+        opacity: 0;
+        animation: petalsFloat 3s linear infinite;
+      }
+
+      @keyframes petalsFloat {
+        0% {
+          transform: translateY(-10vh) translateX(0) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 1;
+        }
+        90% {
+          opacity: 0.5;
+        }
+        100% {
+          transform: translateY(100vh) translateX(100px) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      /* Sparkles */
+      .sparkle {
+        position: fixed;
+        pointer-events: none;
+        z-index: 5;
+      }
+
+      .sparkle::before {
+        content: "✨";
+        font-size: 20px;
+        display: block;
+      }
+
+      .continue-btn {
+        position: fixed;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(135deg, #c2637a, #e8a0b0);
+        color: white;
+        border: none;
+        padding: 12px 30px;
+        border-radius: 50px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 8px 20px rgba(194, 99, 122, 0.3);
+        transition: all 0.3s ease;
+        opacity: 0;
+        animation: fadeIn 0.8s ease-out 2.5s forwards;
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 1px;
+      }
+
+      .continue-btn:hover {
+        transform: translateX(-50%) scale(1.05);
+        box-shadow: 0 12px 30px rgba(194, 99, 122, 0.5);
+      }
+
+      .continue-btn:active {
+        transform: translateX(-50%) scale(0.98);
+      }
+    </style>
   </head>
   <body>
-    <p>Redirecting to wisuda page...</p>
+    <div class="petal-container" id="petalContainer"></div>
+
+    <div class="curtain-container">
+      <div class="curtain curtain-left"></div>
+      <div class="curtain curtain-right"></div>
+      <div class="gold-line"></div>
+    </div>
+
+    <div class="content">
+      <div class="welcome-title">Selamat<br />Wisuda</div>
+      <div class="welcome-subtitle">✦ Sayangku ✦</div>
+      <div class="hearts">💗 🌸 💗</div>
+      <div class="tap-text">Klik untuk melanjutkan...</div>
+    </div>
+
+    <button class="continue-btn" onclick="goToMain()">Lihat Kejutan ✨</button>
+
+    <script>
+      // Create floating petals
+      const petalContainer = document.getElementById("petalContainer");
+      for (let i = 0; i < 15; i++) {
+        const petal = document.createElement("div");
+        petal.className = "petal";
+        petal.style.left = Math.random() * 100 + "%";
+        petal.style.animationDelay = 0.8 + Math.random() * 2 + "s";
+        petal.style.animationDuration = 3 + Math.random() * 2 + "s";
+        petalContainer.appendChild(petal);
+      }
+
+      // Create sparkles
+      function createSparkle() {
+        const sparkle = document.createElement("div");
+        sparkle.className = "sparkle";
+        sparkle.style.left = Math.random() * window.innerWidth + "px";
+        sparkle.style.top = Math.random() * window.innerHeight + "px";
+        document.body.appendChild(sparkle);
+
+        setTimeout(() => sparkle.remove(), 500);
+      }
+
+      // Create sparkles after curtain opens
+      setTimeout(() => {
+        for (let i = 0; i < 20; i++) {
+          setTimeout(createSparkle, i * 50);
+        }
+      }, 1000);
+
+      // Click anywhere or button to go to main page
+      function goToMain() {
+        window.location.href = "wisuda-romantis.html";
+      }
+
+      document.addEventListener("click", goToMain);
+    </script>
   </body>
 </html>
