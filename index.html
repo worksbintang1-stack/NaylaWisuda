@@ -51,6 +51,7 @@
         height: 100%;
         z-index: 1000;
         display: flex;
+        pointer-events: none;
       }
 
       .curtain {
@@ -219,9 +220,37 @@
         padding: 30px 20px;
         display: flex;
         justify-content: center;
-        align-items: flex-end;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
         z-index: 100;
         pointer-events: none;
+      }
+
+      .music-btn {
+        background: radial-gradient(circle at top left, #f9d9e0, #f1a7bf);
+        color: #6f2b44;
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        padding: 12px 24px;
+        border-radius: 40px;
+        font-size: 14px;
+        cursor: pointer;
+        box-shadow: 0 8px 18px rgba(194, 99, 122, 0.25);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        opacity: 0;
+        animation: fadeIn 0.8s ease-out 2.5s forwards;
+        font-family: "Cormorant Garamond", serif;
+        letter-spacing: 0.5px;
+        pointer-events: auto;
+      }
+
+      .music-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 24px rgba(194, 99, 122, 0.35);
+      }
+
+      .music-btn:active {
+        transform: scale(0.96);
       }
 
       /* Petals Animation */
@@ -330,31 +359,39 @@
     </style>
   </head>
   <body>
-    <div class="petal-container" id="petalContainer"></div>
-
-    <div class="curtain-container">
-      <div class="curtain curtain-left"></div>
-      <div class="curtain curtain-right"></div>
-      <div class="gold-line"></div>
-    </div>
-
-    <div class="content">
-      <div class="welcome-title">Selamat<br />Wisuda</div>
-      <div class="welcome-subtitle">✦ Sayangku ✦</div>
-      <div class="hearts">💗 🌸 💗</div>
-      <div class="tap-text">Klik untuk melanjutkan...</div>
-    </div>
-
-    <div class="button-wrapper">
-      <button class="continue-btn" onclick="goToMain()">
-        Lihat Kejutan ✨
-      </button>
-    </div>
-
     <!-- Audio element untuk musik Jatuh Suka -->
-    <audio id="bgMusic" preload="auto" volume="0.6">
-      <source src="mp3/jatuh%20suka.mp3" type="audio/mpeg" />
+    <audio id="bgMusic" preload="auto" volume="0.6" loop>
+      <source
+        src="mp3/jatuh suka.mp3"
+        type="audio/mpeg"
+      />
     </audio>
+
+    <div id="app">
+      <div class="petal-container" id="petalContainer"></div>
+
+      <div class="curtain-container">
+        <div class="curtain curtain-left"></div>
+        <div class="curtain curtain-right"></div>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="content">
+        <div class="welcome-title">Selamat<br />Wisuda</div>
+        <div class="welcome-subtitle">✦ Sayangku ✦</div>
+        <div class="hearts">💗 🌸 💗</div>
+        <div class="tap-text">Klik untuk melanjutkan...</div>
+      </div>
+
+      <div class="button-wrapper">
+        <button class="music-btn" onclick="toggleMusic()" aria-label="Putar musik">
+          🎶 Putar Musik
+        </button>
+        <button class="continue-btn" onclick="goToMain()">
+          Lihat Kejutan ✨
+        </button>
+      </div>
+    </div>
 
     <script>
       // Create floating petals
@@ -388,13 +425,43 @@
 
       // Click button to go to main page
       let alreadyClicked = false;
+      let musicPlaying = false;
+      const music = document.getElementById("bgMusic");
+      const musicButton = document.querySelector(".music-btn");
 
-      function goToMain() {
+      function updateMusicButton() {
+        if (!musicButton) return;
+        musicButton.textContent = musicPlaying ? "⏸️ Musik" : "🎶 Putar Musik";
+      }
+
+      function toggleMusic() {
+        if (!music) return;
+
+        if (music.paused) {
+          music.volume = 0.7;
+          const playPromise = music.play();
+          if (playPromise !== undefined) {
+            playPromise
+              .then(() => {
+                musicPlaying = true;
+                updateMusicButton();
+              })
+              .catch((err) => console.log("Audio play failed:", err));
+          } else {
+            musicPlaying = true;
+            updateMusicButton();
+          }
+        } else {
+          music.pause();
+          musicPlaying = false;
+          updateMusicButton();
+        }
+      }
+
+      async function goToMain() {
         if (alreadyClicked) return;
         alreadyClicked = true;
 
-        // Play music
-        const music = document.getElementById("bgMusic");
         if (music) {
           music.volume = 0.7;
           const playPromise = music.play();
@@ -403,16 +470,57 @@
           }
         }
 
-        // Navigate after a short delay
-        setTimeout(() => {
-          window.location.href = "wisuda-romantis.html";
-        }, 400);
+        document.querySelector('.continue-btn').textContent = 'Memuat...';
+        document.querySelector('.continue-btn').disabled = true;
+
+        await loadPage('wisuda-romantis.html');
       }
 
-      // Only listen to button clicks
-      document
-        .querySelector(".continue-btn")
-        .addEventListener("click", goToMain);
+      async function loadPage(url) {
+        try {
+          const response = await fetch(url);
+          if (!response.ok) throw new Error('Fetch failed');
+          const html = await response.text();
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(html, 'text/html');
+
+          const newTitle = doc.querySelector('title');
+          if (newTitle) document.title = newTitle.textContent;
+
+          const headStyles = doc.querySelectorAll('head style, head link[rel="stylesheet"]');
+          headStyles.forEach((node) => {
+            document.head.appendChild(node.cloneNode(true));
+          });
+
+          const app = document.getElementById('app');
+          if (!app) return;
+          app.innerHTML = doc.body.innerHTML;
+
+          window.history.pushState(null, '', url);
+
+          const scripts = doc.querySelectorAll('script');
+          scripts.forEach((script) => {
+            if (script.src) {
+              const newScript = document.createElement('script');
+              newScript.src = script.src;
+              document.body.appendChild(newScript);
+            } else {
+              const inline = document.createElement('script');
+              inline.textContent = script.textContent;
+              document.body.appendChild(inline);
+            }
+          });
+        } catch (err) {
+          console.error(err);
+          const newTab = window.open(url, '_blank');
+          if (!newTab) {
+            window.location.href = url;
+          }
+        }
+      }
+
+      updateMusicButton();
+      document.querySelector('.continue-btn').addEventListener('click', goToMain);
     </script>
   </body>
 </html>
