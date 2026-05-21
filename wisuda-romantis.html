@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selamat Wisuda, Sayangku 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500&family=Dancing+Script:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --pink-deep: #c2637a;
+    --pink-mid: #e8a0b0;
+    --pink-soft: #f5c6d0;
+    --pink-pale: #fdeef1;
+    --pink-blush: #fdf0f3;
+    --cream: #fdf8f5;
+    --gold: #c9a96e;
+    --text-dark: #3d2a2f;
+    --text-mid: #7a4f57;
+    --text-soft: #b07080;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* PETALS */
+  .petal-container { position: fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; overflow:hidden; }
+  .petal {
+    position: absolute; top: -40px;
+    width: 12px; height: 16px;
+    background: radial-gradient(ellipse at 40% 30%, #f5d0d8, #e8a0b0, #d4778a);
+    border-radius: 50% 50% 50% 0;
+    opacity: 0;
+    animation: fall linear infinite;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-40px) rotate(0deg) scale(1); opacity: 0; }
+    10%  { opacity: 0.7; }
+    90%  { opacity: 0.5; }
+    100% { transform: translateY(110vh) rotate(720deg) scale(0.5); opacity: 0; }
+  }
+
+  /* NAV DOTS */
+  .nav-dots { position:fixed; right:18px; top:50%; transform:translateY(-50%); z-index:1000; display:flex; flex-direction:column; gap:12px; }
+  .nav-dot { width:10px; height:10px; border-radius:50%; background:var(--pink-soft); border:2px solid var(--pink-mid); cursor:pointer; transition:all 0.3s; }
+  .nav-dot.active { background:var(--pink-deep); border-color:var(--pink-deep); transform:scale(1.3); }
+
+  /* PAGE NAV */
+  .page-nav { position:fixed; bottom:28px; left:50%; transform:translateX(-50%); z-index:1000; display:flex; gap:12px; }
+  .page-btn { background:white; border:1px solid var(--pink-soft); color:var(--pink-deep); border-radius:50%; width:42px; height:42px; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 2px 12px rgba(194,99,122,0.2); transition:all 0.2s; }
+  .page-btn:hover { background:var(--pink-deep); color:white; }
+
+  /* PAGES */
+  .page { min-height:100vh; width:100%; position:relative; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:60px 20px; }
+
+  /* PAGE 1 HERO */
+  .page-hero { background: linear-gradient(160deg, #fdeef1 0%, #fdf0f3 40%, #fdeef1 100%); overflow:hidden; }
+  .hero-bg-circle { position:absolute; border-radius:50%; background:radial-gradient(circle, rgba(232,160,176,0.18), transparent 70%); }
+  .hero-bg-circle.c1 { width:500px; height:500px; top:-100px; left:-100px; }
+  .hero-bg-circle.c2 { width:400px; height:400px; bottom:-80px; right:-80px; }
+  .hero-content { position:relative; text-align:center; z-index:2; }
+
+  .hero-photo-frame { width:200px; height:200px; border-radius:50%; margin:0 auto 30px; position:relative; }
+  .hero-photo-frame::before { content:''; position:absolute; inset:-6px; border-radius:50%; background:conic-gradient(var(--pink-deep), var(--gold), var(--pink-mid), var(--gold), var(--pink-deep)); animation:spin 8s linear infinite; }
+  @keyframes spin { to { transform:rotate(360deg); } }
+  .hero-photo-frame::after { content:''; position:absolute; inset:-3px; border-radius:50%; background:var(--pink-pale); }
+
+  .hero-photo { position:relative; z-index:1; width:100%; height:100%; border-radius:50%; overflow:hidden; background:linear-gradient(135deg, var(--pink-soft), var(--pink-mid)); }
+  .hero-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+
+  .hero-label { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; letter-spacing:3px; color:var(--gold); text-transform:uppercase; margin-bottom:16px; }
+  .hero-title { font-family:'Dancing Script',cursive; font-size:clamp(44px,12vw,72px); color:var(--pink-deep); line-height:1.1; margin-bottom:10px; }
+  .hero-name { font-family:'Cormorant Garamond',serif; font-size:clamp(22px,6vw,36px); font-weight:300; color:var(--text-mid); letter-spacing:4px; margin-bottom:24px; }
+  .hero-divider { display:flex; align-items:center; gap:12px; justify-content:center; margin-bottom:24px; }
+  .hero-divider span { color:var(--gold); font-size:18px; }
+  .hero-divider::before, .hero-divider::after { content:''; width:60px; height:1px; background:linear-gradient(to right, transparent, var(--gold), transparent); }
+  .hero-quote { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:15px; color:var(--text-soft); max-width:280px; margin:0 auto 32px; line-height:1.8; }
+  .scroll-hint { display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--pink-mid); font-size:11px; letter-spacing:2px; animation:bounce 2s ease infinite; }
+  @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(6px)} }
+
+  /* PAGE 2 GALLERY */
+  .page-gallery { background:linear-gradient(180deg, #fdf8f5 0%, var(--pink-blush) 100%); }
+  .section-header { text-align:center; margin-bottom:36px; }
+  .section-label { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; letter-spacing:3px; color:var(--gold); text-transform:uppercase; display:block; margin-bottom:10px; }
+  .section-title { font-family:'Dancing Script',cursive; font-size:clamp(32px,9vw,52px); color:var(--pink-deep); line-height:1.2; }
+
+  .gallery-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:12px; width:100%; max-width:420px; }
+  .gallery-card { position:relative; border-radius:16px; overflow:hidden; cursor:pointer; transition:transform 0.3s, box-shadow 0.3s; }
+  .gallery-card:nth-child(1) { grid-row:span 2; height:280px; }
+  .gallery-card:nth-child(2), .gallery-card:nth-child(3) { height:134px; }
+  .gallery-card:nth-child(4) { grid-column:span 2; height:160px; }
+  .gallery-card:nth-child(5), .gallery-card:nth-child(6) { height:130px; }
+  .gallery-card:hover { transform:scale(1.02); box-shadow:0 8px 30px rgba(194,99,122,0.25); }
+  .gallery-card img { width:100%; height:100%; object-fit:cover; display:block; }
+  .gallery-card::after { content:''; position:absolute; inset:0; background:linear-gradient(to top, rgba(194,99,122,0.25) 0%, transparent 60%); pointer-events:none; }
+
+  /* PAGE 3 LETTER */
+  .page-letter { background:linear-gradient(160deg, var(--pink-blush), #fdf5f7); }
+  .letter-wrap { max-width:380px; width:100%; background:white; border-radius:24px; padding:40px 32px; position:relative; box-shadow:0 4px 40px rgba(194,99,122,0.12); border:1px solid rgba(232,160,176,0.3); }
+  .letter-wrap::before { content:'✉'; position:absolute; top:-20px; left:50%; transform:translateX(-50%); font-size:36px; background:white; padding:0 10px; color:var(--pink-deep); }
+  .letter-date { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:13px; color:var(--text-soft); text-align:right; margin-bottom:20px; }
+  .letter-text { font-family:'Cormorant Garamond',serif; font-size:17px; line-height:1.9; color:var(--text-dark); white-space:pre-line; }
+  .letter-text em { color:var(--pink-deep); font-style:italic; }
+  .letter-sign { font-family:'Dancing Script',cursive; font-size:28px; color:var(--pink-deep); text-align:right; margin-top:24px; }
+  .letter-hearts { text-align:center; font-size:20px; margin-top:16px; letter-spacing:6px; }
+
+  /* PAGE 4 POLAROID */
+  .page-memories { background:linear-gradient(180deg, #fdf5f7, var(--pink-pale)); }
+  .polaroid-strip { display:flex; flex-direction:column; gap:20px; width:100%; max-width:340px; align-items:center; }
+  .polaroid { background:white; padding:12px 12px 40px; box-shadow:0 4px 20px rgba(0,0,0,0.12), 0 1px 4px rgba(0,0,0,0.08); border-radius:2px; position:relative; cursor:pointer; transition:transform 0.3s; width:220px; }
+  .polaroid:nth-child(odd)  { transform:rotate(-2deg); }
+  .polaroid:nth-child(even) { transform:rotate(2deg); }
+  .polaroid:hover { transform:rotate(0deg) scale(1.04) !important; z-index:10; }
+  .polaroid-photo { width:196px; height:196px; overflow:hidden; }
+  .polaroid-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+  .polaroid-caption { position:absolute; bottom:10px; left:0; right:0; text-align:center; font-family:'Dancing Script',cursive; font-size:15px; color:var(--text-mid); padding:0 8px; }
+  .tape { position:absolute; top:-12px; left:50%; transform:translateX(-50%); width:50px; height:20px; background:rgba(245,198,208,0.55); border-radius:2px; }
+
+  /* PAGE 5 FINAL */
+  .page-final { background:linear-gradient(160deg, var(--pink-blush), #fdeef5); text-align:center; }
+  .final-photo { width:160px; height:160px; border-radius:50%; overflow:hidden; margin:0 auto 24px; border:4px solid var(--pink-soft); box-shadow:0 0 0 8px rgba(232,160,176,0.2), 0 0 0 16px rgba(232,160,176,0.1); }
+  .final-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+  .final-big-text { font-family:'Dancing Script',cursive; font-size:clamp(42px,11vw,68px); color:var(--pink-deep); line-height:1.1; margin-bottom:16px; }
+  .final-sub { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:16px; color:var(--text-soft); line-height:1.8; margin-bottom:28px; max-width:300px; margin-left:auto; margin-right:auto; }
+  .gold-ornament { color:var(--gold); font-size:28px; margin:10px 0; letter-spacing:8px; }
+  .hearts-row { display:flex; justify-content:center; gap:10px; font-size:22px; margin-bottom:20px; }
+  .heart { animation:heartbeat 1.2s ease infinite; }
+  .heart:nth-child(2) { animation-delay:0.2s; }
+  .heart:nth-child(3) { animation-delay:0.4s; }
+  @keyframes heartbeat { 0%,100%{transform:scale(1)} 50%{transform:scale(1.3)} }
+
+  /* LIGHTBOX */
+  .lightbox { position:fixed; inset:0; background:rgba(40,10,20,0.85); z-index:9000; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.3s; }
+  .lightbox.open { opacity:1; pointer-events:all; }
+  .lightbox img { max-width:90vw; max-height:80vh; border-radius:8px; box-shadow:0 20px 60px rgba(0,0,0,0.5); }
+  .lightbox-close { position:absolute; top:20px; right:20px; color:white; font-size:28px; cursor:pointer; background:rgba(255,255,255,0.15); border-radius:50%; width:40px; height:40px; display:flex; align-items:center; justify-content:center; }
+
+  @media (max-width:380px) {
+    .gallery-card:nth-child(1) { height:240px; }
+    .letter-wrap { padding:32px 20px; }
+    .polaroid { width:200px; }
+    .polaroid-photo { width:176px; height:176px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="petal-container" id="petalContainer"></div>
+<nav class="nav-dots" id="navDots"></nav>
+<div class="page-nav">
+  <button class="page-btn" onclick="prevPage()">↑</button>
+  <button class="page-btn" onclick="nextPage()">↓</button>
+</div>
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-close" onclick="closeLightbox()">✕</div>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- ═══════════════════════════════════════════
+     PANDUAN GANTI FOTO DI VSCODE:
+     Taruh semua foto di folder "foto/" 
+     lalu ganti path src="foto/NAMA_FILE.jpg"
+     di setiap tag <img> di bawah ini.
+     Nama kekasih bisa diganti di tag yang ada komentar NAMA.
+════════════════════════════════════════════ -->
+
+<!-- PAGE 1 – HERO -->
+<section class="page page-hero" id="page-0">
+  <div class="hero-bg-circle c1"></div>
+  <div class="hero-bg-circle c2"></div>
+  <div class="hero-content">
+
+    <div class="hero-photo-frame">
+      <div class="hero-photo">
+        <!-- FOTO UTAMA / HERO — ganti path di bawah -->
+        <img src="foto/hero.jpg" alt="Foto Wisuda">
+      </div>
+    </div>
+
+    <div class="hero-label">✦ Sebuah Momen Spesial ✦</div>
+    <div class="hero-title">Selamat<br>Wisuda</div>
+
+    <!-- NAMA KEKASIH — ganti teks di bawah -->
+    <div class="hero-name">Nayla</div>
+
+    <div class="hero-divider"><span>✿</span></div>
+    <div class="hero-quote">
+      "Hari ini kau membuktikan bahwa kerja kerasmu tidak pernah sia-sia. Aku bangga padamu, lebih dari yang bisa kuucapkan."
+    </div>
+    <div class="scroll-hint"><span>GULIR KE BAWAH</span><span>↓</span></div>
+  </div>
+</section>
+
+<!-- PAGE 2 – GALERI -->
+<section class="page page-gallery" id="page-1">
+  <div class="section-header">
+    <span class="section-label">✦ Kenangan Indah ✦</span>
+    <div class="section-title">Momenmu<br>yang Berharga</div>
+  </div>
+  <div class="gallery-grid">
+
+    <!-- FOTO GALERI 1 (tinggi, kiri) -->
+    <div class="gallery-card" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="foto/tinggi foto.jpeg" alt="">
+    </div>
+
+    <!-- FOTO GALERI 2 (kanan atas) -->
+    <div class="gallery-card" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="foto/mendatar.jpeg" alt="">
+    </div>
+
+    <!-- FOTO GALERI 3 (kanan tengah) -->
+    <div class="gallery-card" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="foto/hidung anj.jpeg" alt="">
+    </div>
+
+    <!-- FOTO GALERI 4 (lebar penuh) -->
+    <div class="gallery-card" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="foto/meninggi.jpeg" alt="">
+    </div>
+
+    <!-- FOTO GALERI 5 -->
+    <div class="gallery-card" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="foto/mukena.jpeg" alt="">
+    </div>
+
+    <!-- FOTO GALERI 6 -->
+    <div class="gallery-card" onclick="openLightbox(this.querySelector('img').src)">
+      <img src="foto/foto sendiri.jpeg" alt="">
+    </div>
+
+  </div>
+</section>
+
+<!-- PAGE 3 – SURAT CINTA -->
+<section class="page page-letter" id="page-2">
+  <div class="section-header">
+    <span class="section-label">✦ Dari Hatiku ✦</span>
+    <div class="section-title">Surat Kecilku<br>Untukmu</div>
+  </div>
+  <div class="letter-wrap">
+    <div class="letter-date">— Hari Wisudamu —</div>
+    <div class="letter-text">Sayangku yang tercinta,
+
+Hari ini adalah salah satu hari yang paling membuatku bangga seumur hidupku. Melihatmu berdiri dengan senang di wisuda itu dan senyummu yang selalu menjadi alasanku bersemangat setiap harinya...
+
+Kau tidak tahu betapa banyak malam yang kulihat kau berjuang, betapa banyak air mata yang kau sembunyikan, dan betapa hebatnya kau bangkit setiap kali lelah menderamu.
+
+Dan hari ini, <em>semua itu terbayar lunas.</em>
+
+Aku mencintaimu bukan karena sesuatu yang lain, tapi karena dirimu yang tidak pernah menyerah. Selamat, perjalanan indah ini baru saja dimulai — dan aku ingin selalu ada di sisimu.
+
+Dengan seluruh cintaku,</div>
+
+    <!-- NAMA PENGIRIM — ganti teks di bawah -->
+    <div class="letter-sign">~ Star🌸</div>
+    <div class="letter-hearts">🌸 💗 🌸</div>
+  </div>
+</section>
+
+<!-- PAGE 4 – POLAROID -->
+<section class="page page-memories" id="page-3">
+  <div class="section-header">
+    <span class="section-label">✦ Foto Favoritku ✦</span>
+    <div class="section-title">Wajahmu<br>Favoritku</div>
+  </div>
+  <div class="polaroid-strip">
+
+    <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+      <div class="tape"></div>
+      <div class="polaroid-photo">
+        <!-- POLAROID 1 — ganti path -->
+        <img src="foto/meninggi.jpeg" alt="">
+      </div>
+      <!-- CAPTION POLAROID 1 — ganti teks -->
+      <div class="polaroid-caption">Matamu 🌸</div>
+    </div>
+
+    <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+      <div class="tape"></div>
+      <div class="polaroid-photo">
+        <!-- POLAROID 2 — ganti path -->
+        <img src="foto/grid blonde.jpeg" alt="">
+      </div>
+      <!-- CAPTION POLAROID 2 — ganti teks -->
+      <div class="polaroid-caption">Kebahagiaanku 💕</div>
+    </div>
+
+    <div class="polaroid" onclick="openLightbox(this.querySelector('img').src)">
+      <div class="tape"></div>
+      <div class="polaroid-photo">
+        <!-- POLAROID 3 — ganti path -->
+        <img src="foto/grid hitam.jpeg" alt="">
+      </div>
+      <!-- CAPTION POLAROID 3 — ganti teks -->
+      <div class="polaroid-caption">Cantik selamanya 🌷</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PAGE 5 – PENUTUP -->
+<section class="page page-final" id="page-4">
+
+  <div class="final-photo">
+    <!-- FOTO PENUTUP — ganti path -->
+    <img src="foto/foto sendiri.jpeg" alt="">
+  </div>
+
+  <div class="gold-ornament">✦ ✦ ✦</div>
+  <div class="final-big-text">Selamat<br>Wisudamu,<br>Sayangku 🌸</div>
+  <div class="gold-ornament">✦ ✦ ✦</div>
+  <div class="final-sub">
+    "Kau adalah bukti bahwa mimpi-mimpi indah benar-benar bisa menjadi kenyataan. Aku bangga padamu, hari ini dan selamanya."
+  </div>
+  <div class="hearts-row">
+    <span class="heart">💗</span>
+    <span class="heart">🌸</span>
+    <span class="heart">💗</span>
+  </div>
+  <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:14px;color:var(--text-soft);letter-spacing:1px;">
+    dengan seluruh cinta yang ku punya
+  </div>
+</section>
+
+<script>
+  // PETALS
+  const pc = document.getElementById('petalContainer');
+  for(let i=0;i<18;i++){
+    const p=document.createElement('div');
+    p.className='petal';
+    p.style.left=Math.random()*100+'%';
+    p.style.animationDuration=(Math.random()*6+5)+'s';
+    p.style.animationDelay=(Math.random()*8)+'s';
+    p.style.width=(Math.random()*8+8)+'px';
+    p.style.height=(Math.random()*10+12)+'px';
+    pc.appendChild(p);
+  }
+
+  // PAGES
+  const pages = document.querySelectorAll('.page');
+  let cur = 0;
+  const dotsEl = document.getElementById('navDots');
+  pages.forEach((_,i)=>{
+    const d=document.createElement('div');
+    d.className='nav-dot'+(i===0?' active':'');
+    d.onclick=()=>goTo(i);
+    dotsEl.appendChild(d);
+  });
+  function goTo(n){
+    cur=Math.max(0,Math.min(n,pages.length-1));
+    pages.forEach((p,i)=>{ p.style.display=i===cur?'flex':'none'; });
+    document.querySelectorAll('.nav-dot').forEach((d,i)=>d.classList.toggle('active',i===cur));
+    window.scrollTo(0,0);
+  }
+  function nextPage(){ goTo(cur+1); }
+  function prevPage(){ goTo(cur-1); }
+  pages.forEach((p,i)=>{ if(i!==0) p.style.display='none'; });
+
+  // SWIPE
+  let startY=0;
+  document.addEventListener('touchstart',e=>startY=e.touches[0].clientY,{passive:true});
+  document.addEventListener('touchend',e=>{
+    const dy=startY-e.changedTouches[0].clientY;
+    if(Math.abs(dy)>50){ dy>0?nextPage():prevPage(); }
+  });
+
+  // LIGHTBOX
+  function openLightbox(src){ document.getElementById('lightboxImg').src=src; document.getElementById('lightbox').classList.add('open'); }
+  function closeLightbox(){ document.getElementById('lightbox').classList.remove('open'); }
+  document.getElementById('lightbox').addEventListener('click',function(e){ if(e.target===this)closeLightbox(); });
+</script>
+</body>
+</html>
