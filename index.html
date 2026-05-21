@@ -24,11 +24,21 @@
           #fdeef1 100%
         );
         min-height: 100vh;
+        overflow-x: hidden;
+        position: relative;
+      }
+
+      #app {
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .landing-screen {
+        min-height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        overflow: hidden;
-        position: relative;
       }
 
       .button-wrapper {
@@ -368,28 +378,30 @@
     </audio>
 
     <div id="app">
-      <div class="petal-container" id="petalContainer"></div>
+      <div class="landing-screen">
+        <div class="petal-container" id="petalContainer"></div>
 
-      <div class="curtain-container">
-        <div class="curtain curtain-left"></div>
-        <div class="curtain curtain-right"></div>
-        <div class="gold-line"></div>
-      </div>
+        <div class="curtain-container">
+          <div class="curtain curtain-left"></div>
+          <div class="curtain curtain-right"></div>
+          <div class="gold-line"></div>
+        </div>
 
-      <div class="content">
-        <div class="welcome-title">Selamat<br />Wisuda</div>
-        <div class="welcome-subtitle">✦ Sayangku ✦</div>
-        <div class="hearts">💗 🌸 💗</div>
-        <div class="tap-text">Klik untuk melanjutkan...</div>
-      </div>
+        <div class="content">
+          <div class="welcome-title">Selamat<br />Wisuda</div>
+          <div class="welcome-subtitle">✦ Sayangku ✦</div>
+          <div class="hearts">💗 🌸 💗</div>
+          <div class="tap-text">Klik untuk melanjutkan...</div>
+        </div>
 
-      <div class="button-wrapper">
-        <button class="music-btn" onclick="toggleMusic()" aria-label="Putar musik">
-          🎶 Putar Musik
-        </button>
-        <button class="continue-btn" onclick="goToMain()">
-          Lihat Kejutan ✨
-        </button>
+        <div class="button-wrapper">
+          <button class="music-btn" onclick="toggleMusic()" aria-label="Putar musik">
+            🎶 Putar Musik
+          </button>
+          <button class="continue-btn" onclick="goToMain()">
+            Lihat Kejutan ✨
+          </button>
+        </div>
       </div>
     </div>
 
