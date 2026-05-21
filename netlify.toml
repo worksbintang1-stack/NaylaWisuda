@@ -1,0 +1,13 @@
+[build]
+  command = ""
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/wisuda-romantis.html"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/wisuda-romantis.html"
+  status = 200
