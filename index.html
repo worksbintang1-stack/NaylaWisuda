@@ -266,6 +266,8 @@
         animation: fadeIn 0.8s ease-out 2.5s forwards;
         font-family: "Cormorant Garamond", serif;
         letter-spacing: 1px;
+        z-index: 100;
+        white-space: nowrap;
       }
 
       .continue-btn:hover {
@@ -275,6 +277,29 @@
 
       .continue-btn:active {
         transform: translateX(-50%) scale(0.98);
+      }
+
+      @media (max-width: 480px) {
+        .continue-btn {
+          bottom: 25px;
+          padding: 10px 20px;
+          font-size: 14px;
+        }
+
+        .welcome-title {
+          font-size: clamp(36px, 10vw, 56px);
+          margin-bottom: 15px;
+        }
+
+        .hearts {
+          font-size: 20px;
+          letter-spacing: 8px;
+        }
+
+        .tap-text {
+          font-size: 12px;
+          margin-top: 20px;
+        }
       }
     </style>
   </head>
@@ -295,6 +320,14 @@
     </div>
 
     <button class="continue-btn" onclick="goToMain()">Lihat Kejutan ✨</button>
+
+    <!-- Audio element untuk musik -->
+    <audio id="bgMusic" preload="auto">
+      <source
+        src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3"
+        type="audio/mpeg"
+      />
+    </audio>
 
     <script>
       // Create floating petals
@@ -327,8 +360,22 @@
       }, 1000);
 
       // Click anywhere or button to go to main page
+      let alreadyClicked = false;
+
       function goToMain() {
-        window.location.href = "wisuda-romantis.html";
+        if (alreadyClicked) return;
+        alreadyClicked = true;
+
+        // Play music
+        const music = document.getElementById("bgMusic");
+        if (music) {
+          music.play().catch((err) => console.log("Audio play failed:", err));
+        }
+
+        // Navigate after a short delay
+        setTimeout(() => {
+          window.location.href = "wisuda-romantis.html";
+        }, 300);
       }
 
       document.addEventListener("click", goToMain);
